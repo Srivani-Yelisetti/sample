@@ -15,7 +15,7 @@ stages{
   stage('docker remove'){
     steps{
       sh 'docker rm -f srivani1'
-      sh 'docker rmi srivani:latest'
+      sh 'docker rmi srivani:${GIT_COMMIT_SHORT}---${BUILD_NUMBER}'
     }
   }
   stage('docker build'){
