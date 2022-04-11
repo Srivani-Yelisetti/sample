@@ -9,17 +9,17 @@ stages{
   stage('docker remove'){
     steps{
       sh 'docker rm -f srivani1'
-      sh 'docker rmi srivani:latest'
+      sh 'docker rmi srivani:${BUILD_NUMBER}'
     }
   }
   stage('docker build'){
     steps{
-      sh 'docker build -t srivani:latest .'
+      sh 'docker build -t srivani:${BUILD_NUMBER} .'
     }
   }
   stage('docker run'){
     steps{
-    sh 'docker run -it -d -p 90:80 --name srivani1 srivani:latest'
+      sh 'docker run -it -d -p 90:80 --name srivani1 srivani:${BUILD_NUMBER}'
     }
   }
 }
