@@ -8,7 +8,12 @@ stages{
   }
   stage('docker pull'){
     steps{
-      sh 'docker pull ubuntu'
+      sh 'docker pull nginx:latest'
+    }
+  }
+  stage('docker run'){
+    steps{
+    sh 'docker run -it -d -p 89:80 --name srivani nginx:latest'
     }
   }
 }
