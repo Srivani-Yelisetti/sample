@@ -1,5 +1,11 @@
 pipeline{
 agent any
+  environment {
+    GIT_COMMIT_SHORT = sh(
+                script: "printf \$(git rev-parse --short ${GIT_COMMIT})",
+                returnStdout: true
+        )
+    }
 stages{
   stage('git'){
         steps{
@@ -14,12 +20,12 @@ stages{
   }
   stage('docker build'){
     steps{
-      sh 'docker build -t srivani:${BUILD_NUMBER} .'
+      sh 'docker build -t srivani:${GIT_COMMIT_SHORT}---${BUILD_NUMBER} .'
     }
   }
   stage('docker run'){
     steps{
-      sh 'docker run -it -d -p 90:80 --name srivani1 srivani:${BUILD_NUMBER}'
+      sh 'docker run -it -d -p 90:80 --name srivani1 srivani:${GIT_COMMIT_SHORT}---${BUILD_NUMBER}'
     }
   }
 }
